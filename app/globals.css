@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+/*
+  STAIL design tokens.
+  Light theme on :root; dark overrides via prefers-color-scheme only —
+  theme follows the system, there is intentionally no manual toggle.
+*/
+:root {
+  --bg: #f0f1f3;
+  --elev: #e6e8eb;
+  --card: #ffffff;
+  --ink: #0b0d12;
+  --ink-2: #3e4450;
+  --muted: #63696f;
+  --line: rgba(11, 13, 18, 0.09);
+  --line-strong: rgba(11, 13, 18, 0.18);
+  --accent: #00708f;
+  --accent-raw: #00b8d9;
+  --accent-soft: rgba(0, 140, 178, 0.09);
+  --gold: #93720a;
+  --gold-soft: rgba(147, 114, 10, 0.1);
+  --terminal-bg: #0b0f1a;
+  --terminal-ink: #d7e0f2;
+  --glow: rgba(0, 184, 217, 0.14);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #05070d;
+    --elev: #090d17;
+    --card: #0d1220;
+    --ink: #f0f4ff;
+    --ink-2: #c3cbdc;
+    --muted: #8892a4;
+    --line: rgba(240, 244, 255, 0.08);
+    --line-strong: rgba(240, 244, 255, 0.16);
+    --accent: #00e5ff;
+    --accent-raw: #00e5ff;
+    --accent-soft: rgba(0, 229, 255, 0.09);
+    --gold: #f5c842;
+    --gold-soft: rgba(245, 200, 66, 0.1);
+    --terminal-bg: #0b0f1a;
+    --terminal-ink: #d7e0f2;
+    --glow: rgba(0, 229, 255, 0.1);
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-elev: var(--elev);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-raw: var(--accent-raw);
+  --color-accent-soft: var(--accent-soft);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-terminal: var(--terminal-bg);
+  --color-terminal-ink: var(--terminal-ink);
+  --font-sans: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-space-mono), ui-monospace, "SF Mono", monospace;
+  --font-serif: var(--font-instrument), "Instrument Serif", Georgia, serif;
+  --radius-card: 1.25rem;
+  --radius-tile: 0.875rem;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis owns scrolling */
+}
+
+/*
+  Keep anchor targets clear of the floating header. Lenis applies its own
+  offset when it runs, but reduced-motion and no-JS visitors fall back to
+  native jumps — without this their section headings land underneath it.
+*/
+:target,
+section[id],
+footer[id] {
+  scroll-margin-top: 6.5rem;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Thin, theme-aware scrollbar */
+@supports (scrollbar-width: thin) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
+}
+
+/* Masked line-reveal helper: SplitText lines get wrapped and translated */
+.reveal-mask .line {
+  overflow: hidden;
+}
+
+/* Marquee keyframes — duplicated track scrolls 50% for a seamless loop */
+@keyframes marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee-x var(--marquee-duration, 40s) linear infinite;
+}
+
+.marquee-paused:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-blink {
+  animation: blink 1.1s step-end infinite;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
