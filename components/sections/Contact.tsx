@@ -1,9 +1,10 @@
-import Image from "next/image";
+
 import { Section, SectionLabel } from "@/components/ui/Section";
 import { TextReveal, FadeIn } from "@/components/ui/Reveal";
 import { Accent } from "@/components/ui/Accent";
 import { CONTACT, SITE } from "@/lib/data";
 import { ContactForm } from "./ContactForm";
+import { PixelatedImage } from "@/components/ui/OsmoTransitions";
 
 /*
  * Contact — split layout: office details + Calendly CTA sitting on a sky
@@ -31,13 +32,9 @@ export function Contact() {
         {/* ——— Sky panel: office card + Calendly glass card ——— */}
         <FadeIn className="h-full">
           <div className="relative flex h-full flex-col gap-4 overflow-hidden rounded-[2rem] p-4 sm:gap-5 sm:p-6">
-            <Image
+            <PixelatedImage
               src="/img/contact-sky.jpg"
               alt=""
-              aria-hidden
-              fill
-              quality={85}
-              sizes="(max-width: 1024px) 100vw, 600px"
               className="object-cover"
             />
             {/* soft scrim for card + type contrast */}

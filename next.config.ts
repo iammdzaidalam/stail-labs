@@ -33,6 +33,9 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // The sky panels are the page's hero imagery, so they are served at a
+  // higher quality than the default 75.
+  images: { qualities: [75, 85, 88] },
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },

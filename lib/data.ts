@@ -6,9 +6,9 @@
 export const SITE = {
   name: "STAIL",
   legalName: "ShivTrinetrix AI Labs Private Limited",
-  title: "STAIL — ShivTrinetrix AI Labs | India's Sovereign AI Future",
+  title: "STAIL — ShivTrinetrix AI Labs | India’s Sovereign AI Future",
   description:
-    "ShivTrinetrix AI Labs (STAIL) — Building India's Sovereign AI Future. AI Models, AI Infrastructure, AI Transformation for Governments, PSUs, Mining, Defense & Enterprises.",
+    "ShivTrinetrix AI Labs (STAIL) — Building India’s Sovereign AI Future. AI Models, AI Infrastructure, AI Transformation for Governments, PSUs, Mining, Defense & Enterprises.",
   url: "https://stail.co.in",
   phone: "+91 76679 21536",
   phoneHref: "tel:+917667921536",
@@ -30,8 +30,8 @@ export const NAV_LINKS = [
 ] as const;
 
 export const HERO = {
-  kicker: "India's Sovereign AI Future",
-  headline: ["Building India's future", "with Sovereign AI"],
+  kicker: "India’s Sovereign AI Future",
+  headline: ["Building India’s future", "with Sovereign AI"],
   sub: "Building Sovereign AI Systems, Industry Intelligence Platforms, and Enterprise AI Infrastructure for the Next Generation of Digital India.",
   sectorsLabel: "Serving critical sectors across India",
   sectors: [
@@ -47,7 +47,7 @@ export const HERO = {
 } as const;
 
 /**
- * Copy for the hero's floating mini-cards. Kept here (rather than inline in
+ * Copy for the hero’s floating mini-cards. Kept here (rather than inline in
  * the component) so these figures stay in step with STATS/FLAGSHIP/CASE_STUDY.
  */
 export const HERO_CARDS = {
@@ -94,7 +94,7 @@ export const ABOUT = {
   ],
   vision: {
     title: "Our Vision",
-    body: "To become India's leading AI Research & Product Company powering governments and enterprises across every strategic sector.",
+    body: "To become India’s leading AI Research & Product Company powering governments and enterprises across every strategic sector.",
   },
   mission: {
     title: "Mission",
@@ -400,7 +400,7 @@ export const SERVICES = {
 export const ADVANTAGES = {
   label: "The STAIL Advantage",
   heading: "Why Choose STAIL",
-  sub: "We're not just another AI vendor — we're India's sovereign AI research and product lab invested in your outcome.",
+  sub: "We’re not just another AI vendor — we’re India’s sovereign AI research and product lab invested in your outcome.",
   items: [
     {
       name: "Sovereign AI Architecture",
@@ -416,7 +416,7 @@ export const ADVANTAGES = {
     },
     {
       name: "Custom AI Models",
-      body: "Proprietary models fine-tuned specifically for your organization's data, language, and operational workflows.",
+      body: "Proprietary models fine-tuned specifically for your organization’s data, language, and operational workflows.",
     },
     {
       name: "Full Stack AI Partner",
@@ -463,7 +463,7 @@ export const STUDIO = {
 export const RESEARCH = {
   label: "Research",
   heading: "AI Research at STAIL",
-  sub: "Advancing the state of AI through focused research in areas that matter most to India's sovereign AI future.",
+  sub: "Advancing the state of AI through focused research in areas that matter most to India’s sovereign AI future.",
   areas: [
     "Agentic AI",
     "Sovereign AI",
@@ -511,8 +511,8 @@ export const CASE_STUDY = {
 
 export const CAREERS = {
   label: "Careers",
-  heading: "Build India's AI Future",
-  sub: "Join a team of researchers, engineers, and builders working on India's most ambitious AI projects.",
+  heading: "Build India’s AI Future",
+  sub: "Join a team of researchers, engineers, and builders working on India’s most ambitious AI projects.",
   roles: [
     { name: "AI Engineers", meta: "Full time · Bangalore" },
     { name: "ML Engineers", meta: "Full time · Bangalore" },
@@ -524,8 +524,8 @@ export const CAREERS = {
 
 export const CONTACT = {
   label: "Contact",
-  heading: ["Let's Build India's", "AI Future Together"],
-  sub: "Book a strategy call or send us a message. We'll get back to you within 24 hours.",
+  heading: ["Let’s Build India’s", "AI Future Together"],
+  sub: "Book a strategy call or send us a message. We’ll get back to you within 24 hours.",
   callCard: {
     title: "Book a Strategy Call",
     body: "30 minutes. No pitch decks. Just honest advice on how STAIL can transform your organization.",
@@ -544,8 +544,8 @@ export const CONTACT = {
 } as const;
 
 export const CTA = {
-  headline: ["Sovereign AI.", "India's Future."],
-  body: "Join the governments and enterprises that are building with STAIL — India's sovereign AI research and product lab.",
+  headline: ["Sovereign AI.", "India’s Future."],
+  body: "Join the governments and enterprises that are building with STAIL — India’s sovereign AI research and product lab.",
 } as const;
 
 export const FOOTER = {

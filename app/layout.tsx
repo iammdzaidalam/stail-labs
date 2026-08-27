@@ -1,24 +1,40 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, Space_Grotesk, Space_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import { SITE } from "@/lib/data";
 import "./globals.css";
 
-const grotesk = Space_Grotesk({
-  variable: "--font-grotesk",
+/*
+ * Type system.
+ *
+ * `display` is the single swappable knob for the whole site's voice — every
+ * heading and every line of body copy resolves through `--font-display`.
+ * Geist is a neutral Swiss grotesque; it stays quiet so the Instrument Serif
+ * italic accent words carry the personality.
+ */
+const display = Geist({
+  variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
+  // The design never sets a weight above 500 — size and tracking do the work,
+  // so the heavier faces are simply not downloaded.
+  weight: ["300", "400", "500"],
 });
 
-const mono = Space_Mono({
-  variable: "--font-space-mono",
-  weight: ["400", "700"],
+const mono = Geist_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
   display: "swap",
+  weight: ["400", "500"],
 });
 
-const instrument = Instrument_Serif({
-  variable: "--font-instrument",
+/*
+ * Accent face — used ONLY by <Accent> for one italic phrase per heading.
+ * Instrument Serif ships a single weight with a true italic, which is exactly
+ * the constraint we want: it can never be pressed into service as body copy.
+ */
+const serif = Instrument_Serif({
+  variable: "--font-serif",
   weight: "400",
   style: ["normal", "italic"],
   subsets: ["latin"],
@@ -61,8 +77,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f6f5f1" },
-    { media: "(prefers-color-scheme: dark)", color: "#05070d" },
+    { media: "(prefers-color-scheme: light)", color: "#eef0f4" },
+    { media: "(prefers-color-scheme: dark)", color: "#06080c" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -92,7 +108,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${grotesk.variable} ${mono.variable} ${instrument.variable} antialiased`}
+        className={`${display.variable} ${mono.variable} ${serif.variable} antialiased`}
       >
         <script
           type="application/ld+json"

@@ -15,7 +15,7 @@ export function Advantages() {
       <TextReveal className="mt-4 text-4xl font-medium tracking-tight text-ink sm:text-5xl lg:text-6xl">
         What makes STAIL <Accent>different</Accent>
       </TextReveal>
-      <FadeIn delay={0.15}>
+      <FadeIn>
         <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
           {ADVANTAGES.sub}
         </p>
@@ -30,33 +30,34 @@ export function Advantages() {
              themes (#0b0d12 surface, #00E5FF accent, white text). */
           const dark = i === ADVANTAGES.items.length - 1;
           return (
-            <div
-              key={item.name}
-              className={`rounded-card p-7 transition duration-300 hover:-translate-y-0.5 sm:p-8 ${
-                dark
-                  ? "bg-[#0b0d12] text-white"
-                  : "border border-line bg-card hover:border-line-strong"
-              }`}
-            >
-              <span
-                aria-hidden
-                className={`font-mono text-sm ${dark ? "text-[#00E5FF]" : "text-accent"}`}
-              >
-                {String(i + 1).padStart(2, "0")}
-              </span>
+            <div key={item.name}>
               <div
-                className={`mt-4 border-t pt-5 ${dark ? "border-white/15" : "border-line"}`}
+                className={`h-full rounded-card p-7 transition duration-300 hover:-translate-y-0.5 sm:p-8 ${
+                  dark
+                    ? "bg-[#0b0d12] text-white"
+                    : "border border-line bg-card hover:border-line-strong"
+                }`}
               >
-                <h3
-                  className={`text-lg font-medium sm:text-xl ${dark ? "text-white" : "text-ink"}`}
+                <span
+                  aria-hidden
+                  className={`font-mono text-sm ${dark ? "text-[#00E5FF]" : "text-accent"}`}
                 >
-                  {item.name}
-                </h3>
-                <p
-                  className={`mt-3 text-sm leading-relaxed ${dark ? "text-white/60" : "text-muted"}`}
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div
+                  className={`mt-4 border-t pt-5 ${dark ? "border-white/15" : "border-line"}`}
                 >
-                  {item.body}
-                </p>
+                  <h3
+                    className={`text-lg font-medium sm:text-xl ${dark ? "text-white" : "text-ink"}`}
+                  >
+                    {item.name}
+                  </h3>
+                  <p
+                    className={`mt-3 text-sm leading-relaxed ${dark ? "text-white/60" : "text-muted"}`}
+                  >
+                    {item.body}
+                  </p>
+                </div>
               </div>
             </div>
           );

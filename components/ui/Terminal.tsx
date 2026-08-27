@@ -1,7 +1,13 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
+import {
+  gsap,
+  useGSAP,
+  alreadyOnScreen,
+  guardReveal,
+  prefersReducedMotion,
+} from "@/lib/gsap";
 
 export type TerminalData = {
   title: string;
@@ -32,6 +38,8 @@ export function Terminal({
     () => {
       const root = ref.current;
       if (!root || prefersReducedMotion()) return;
+      // Already visible on mount — leave the finished terminal on screen.
+      if (alreadyOnScreen(root)) return;
 
       const cmd = root.querySelector<HTMLElement>("[data-cmd]");
       const outs = root.querySelectorAll<HTMLElement>("[data-out]");
@@ -47,7 +55,13 @@ export function Terminal({
       gsap.set(outs, { autoAlpha: 0, y: 6 });
 
       const tl = gsap.timeline({
-        scrollTrigger: { trigger: root, start: "top 78%", once: true },
+        // `toggleActions` rather than `once`: a fast scroll past the terminal
+        // would otherwise kill this timeline and leave the output blank.
+        scrollTrigger: {
+          trigger: root,
+          start: "top 78%",
+          toggleActions: "play none play none",
+        },
       });
 
       tl.to(state, {
@@ -59,6 +73,9 @@ export function Terminal({
           },
         })
         .to(outs, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.22, ease: "power2.out" }, "+=0.25");
+
+      // Never leave the terminal blank if its trigger never runs.
+      guardReveal(root, tl);
     },
     { scope: ref },
   );

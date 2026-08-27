@@ -2,142 +2,147 @@ import { FLAGSHIP, PRODUCTS } from "@/lib/data";
 import { Section, SectionLabel } from "@/components/ui/Section";
 import { FadeIn, TextReveal } from "@/components/ui/Reveal";
 import { Accent } from "@/components/ui/Accent";
+import { Button } from "@/components/ui/Button";
+import {
+  BODY,
+  BODY_SM,
+  HEADLINE,
+  LEAD,
+  META,
+  TITLE,
+  TITLE_LG,
+} from "@/components/ui/type";
 
 /*
- * Products — flagship TMI dark panel + 10-product grid with one dark
- * feature card (WeHexa-style) and a vivid CTA card closing the grid.
+ * Products — the flagship TMI panel plus a 10-product grid closed by a
+ * bespoke-build CTA.
+ *
+ * Two things are load-bearing here:
+ *
+ *  1. ONE dark surface. The page's dark-panel budget is three (hero azure,
+ *     Research, final CTA + footer) and none of them is this section, so the
+ *     flagship panel spends the section's entire allowance. The portfolio
+ *     cards below it are all light — a second near-black card 16px under a
+ *     700px near-black panel read as one smeared surface with a white seam
+ *     through it.
+ *
+ *  2. ONE reveal per panel. `autoAlpha:0` reserves layout, so the previous
+ *     two FadeIns inside the flagship left its bottom half as a
+ *     content-sized hole while the top half was already on screen.
  */
 
 /**
- * Section-local copy — this header text does not exist in `@/lib/data`
- * (ported from the old site), so it lives here per the spec's data rule.
- * The heading itself is written inline with <Accent> per the v2 spec.
+ * Section-local copy — this text does not exist in `@/lib/data` (it was
+ * written for this section rather than ported from the old site), so it lives
+ * here per the spec's data rule. The heading itself is inline so the single
+ * <Accent> phrase stays visible in the markup.
  */
 const PORTFOLIO = {
   label: "Product Portfolio",
   sub: "Purpose-built AI platforms designed for security, sovereignty, and scale across India's most critical sectors.",
+  cta: {
+    eyebrow: "Something else?",
+    line: "Your sector's sovereign AI, purpose-built by STAIL.",
+    action: "Talk to us",
+  },
 } as const;
 
 export function Products() {
   return (
-    <Section id="products" className="py-24 sm:py-32 lg:py-40">
+    <Section id="products" className="py-24 sm:py-28 lg:py-32">
       <SectionLabel>{PORTFOLIO.label}</SectionLabel>
-      <TextReveal className="mt-4 text-4xl font-medium tracking-tight text-ink sm:text-5xl lg:text-6xl">
+      <TextReveal className={`${HEADLINE} mt-4`}>
         11 sovereign AI <Accent>products</Accent>
       </TextReveal>
-      <FadeIn delay={0.15}>
-        <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-          {PORTFOLIO.sub}
-        </p>
+      <FadeIn delay={0.15} className="mt-5">
+        <p className={`${LEAD} max-w-xl`}>{PORTFOLIO.sub}</p>
       </FadeIn>
 
       {/*
-       * Flagship: full-width always-dark panel — explicit hex per spec's
-       * dark-panel exception (#0b0d12 ground, #00E5FF accent, #F5C842 gold).
+       * Flagship: the section's only dark surface. Explicit hex per the
+       * spec's always-dark-panel exception — #0a0c10 ground with alpha-white
+       * type, identical in both themes.
        */}
-      <article className="mt-14 rounded-[2rem] border border-white/10 bg-[#0b0d12] p-8 sm:mt-16 sm:p-12">
-        <FadeIn className="flex flex-col items-start gap-5">
-          <p className="inline-flex items-center rounded-full border border-[#F5C842]/25 bg-[#F5C842]/12 px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-[#F5C842]">
+      <FadeIn className="mt-12 sm:mt-16">
+        <article className="rounded-[1.5rem] border border-white/10 bg-[#0a0c10] p-8 sm:rounded-[2rem] sm:p-12">
+          <p
+            className={`${META} inline-flex items-center rounded-full border border-gold/25 bg-gold-soft px-3.5 py-1.5 text-gold`}
+          >
             {FLAGSHIP.badge}
           </p>
-          <h3 className="text-3xl font-medium tracking-tight text-white sm:text-5xl">
-            {FLAGSHIP.name}
-          </h3>
-          <p className="font-mono text-sm uppercase tracking-[0.18em] text-[#00E5FF]">
+
+          <h3 className={`${TITLE_LG} mt-5 text-white`}>{FLAGSHIP.name}</h3>
+
+          <p className={`${LEAD} mt-4 max-w-2xl text-white/70`}>
             {FLAGSHIP.tagline}
           </p>
-          <p className="max-w-2xl leading-relaxed text-white/60">{FLAGSHIP.body}</p>
-        </FadeIn>
+          <p className={`${BODY} mt-4 max-w-2xl text-white/55`}>
+            {FLAGSHIP.body}
+          </p>
 
-        <FadeIn stagger={0.06} className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {FLAGSHIP.modules.map((mod) => (
-            <div
-              key={mod.name}
-              className="rounded-2xl border border-white/10 bg-white/[0.04] p-5 transition-colors duration-300 hover:border-white/25"
-            >
-              <h4 className="font-mono text-sm font-bold text-white">{mod.name}</h4>
-              <p className="mt-2 text-[13px] leading-relaxed text-white/50">
-                {mod.features}
-              </p>
-            </div>
-          ))}
-        </FadeIn>
-      </article>
+          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {FLAGSHIP.modules.map((mod) => (
+              <div
+                key={mod.name}
+                className="rounded-tile border border-white/10 bg-white/[0.04] p-5 transition-colors duration-200 hover:border-white/25"
+              >
+                <h4 className={`${TITLE} text-white`}>{mod.name}</h4>
+                <p className={`${BODY_SM} mt-2 text-white/50`}>{mod.features}</p>
+              </div>
+            ))}
+          </div>
+        </article>
+      </FadeIn>
 
-      {/* Portfolio grid: products 02–11 (first card is the dark feature card) */}
-      <FadeIn stagger={0.06} className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/*
+       * Portfolio grid: products 02–11 plus the CTA. The CTA spans two
+       * columns, so 10 + 2 = 12 cells fills the 3-col and 2-col layouts
+       * exactly — no ragged final row at any breakpoint.
+       */}
+      <FadeIn
+        stagger={0.06}
+        className="mt-12 grid gap-4 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3"
+      >
         {PRODUCTS.map((product, i) => {
           const index = String(i + 2).padStart(2, "0");
-          /* One dark accent card per grid (WeHexa-style) — always-dark, so
-             explicit hex is allowed here per spec. */
-          const dark = i === 0;
           return (
             <article
               key={product.name}
-              className={`group flex flex-col gap-3 rounded-card p-7 transition duration-300 hover:-translate-y-0.5 ${
-                dark
-                  ? "border border-white/10 bg-[#0b0d12] text-white"
-                  : "border border-line bg-card hover:border-line-strong"
-              }`}
+              className="group flex flex-col gap-3 rounded-card border border-line bg-card p-7 transition-colors duration-200 hover:border-line-strong"
             >
               <div className="flex items-baseline justify-between gap-3">
                 <p
-                  className={`font-mono text-[11px] uppercase tracking-[0.18em] transition-colors duration-300 ${
-                    dark ? "text-[#00E5FF]" : "text-muted group-hover:text-accent"
-                  }`}
+                  className={`${META} text-muted transition-colors duration-200 group-hover:text-accent`}
                 >
                   {product.category}
                 </p>
-                <span
-                  aria-hidden
-                  className={`font-mono text-[11px] leading-none ${
-                    dark ? "text-white/30" : "text-muted/50"
-                  }`}
-                >
+                <span aria-hidden className={`${META} tabular text-muted/60`}>
                   {index}
                 </span>
               </div>
-              <h3 className={`text-xl font-medium ${dark ? "text-white" : "text-ink"}`}>
-                {product.name}
-              </h3>
-              <p
-                className={`flex-1 text-sm leading-relaxed ${
-                  dark ? "text-white/60" : "text-muted"
-                }`}
-              >
-                {product.body}
-              </p>
-              <p
-                className={`mt-2 font-mono text-[10.5px] uppercase tracking-wide ${
-                  dark ? "text-white/40" : "text-muted/70"
-                }`}
-              >
+              <h3 className={TITLE}>{product.name}</h3>
+              <p className={`${BODY} flex-1`}>{product.body}</p>
+              <p className={`${META} mt-2 text-muted/70`}>
                 {product.tags.join(" · ")}
               </p>
             </article>
           );
         })}
 
-        {/* Fills the final grid row: CTA card for bespoke builds */}
-        <a
-          href="#contact"
-          className="group flex flex-col justify-between gap-6 rounded-card bg-accent-raw p-7 text-[#04121a] transition-colors duration-300 hover:bg-ink hover:text-bg sm:col-span-2 lg:col-span-2"
-        >
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] opacity-70">
-            Something else?
-          </p>
-          <div className="flex items-end justify-between gap-6">
-            <p className="max-w-md text-xl font-medium leading-snug sm:text-2xl">
-              Your sector&apos;s sovereign AI, purpose-built by STAIL.
-            </p>
-            <span
-              aria-hidden
-              className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#04121a]/10 text-lg transition-transform duration-300 group-hover:rotate-45"
-            >
-              ↗
-            </span>
+        {/*
+         * The section's single saturated fill. Not a link itself — it carries
+         * a real <Button>, so the affordance is the shared pill rather than a
+         * hand-rolled chip, and a card-sized anchor never swallows the label.
+         */}
+        <div className="flex flex-col justify-between gap-8 rounded-card bg-accent-raw p-7 text-white sm:col-span-2">
+          <p className={`${META} text-white/70`}>{PORTFOLIO.cta.eyebrow}</p>
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <p className={`${TITLE_LG} max-w-md`}>{PORTFOLIO.cta.line}</p>
+            <Button href="#contact" variant="onPanel" arrow="chip">
+              {PORTFOLIO.cta.action}
+            </Button>
           </div>
-        </a>
+        </div>
       </FadeIn>
     </Section>
   );

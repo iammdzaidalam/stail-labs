@@ -3,12 +3,18 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, useGSAP, EASE, DUR, prefersReducedMotion } from "@/lib/gsap";
 import { NAV_LINKS, SITE } from "@/lib/data";
+import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
+import { HEADLINE_SM, META } from "@/components/ui/type";
 
 /**
  * Floating black pill navbar (farce-style): a detached rounded-full dark
  * bar centered near the top of the viewport, constant in both themes.
  * Below lg the links collapse into a full-screen overlay menu.
+ *
+ * Type note: nav links are sentence-case sans, not uppercase mono. Uppercase
+ * is rationed to the section kicker and card micro-type — a bar of tracked-out
+ * caps is the loudest template tell there is.
  */
 export function Navbar() {
   const rootRef = useRef<HTMLElement>(null);
@@ -44,6 +50,20 @@ export function Navbar() {
     };
   }, [open]);
 
+  /* Navbar load entrance */
+  useGSAP(
+    () => {
+      gsap.from(rootRef.current, {
+        yPercent: -150,
+        opacity: 0,
+        duration: 1.2,
+        ease: "power4.out",
+        delay: 1.2
+      });
+    },
+    { scope: rootRef, dependencies: [] },
+  );
+
   /* Staggered entrance for the overlay links each time the menu opens. */
   useGSAP(
     () => {
@@ -55,7 +75,7 @@ export function Navbar() {
           {
             yPercent: 110,
             duration: DUR.base,
-            ease: EASE.expo,
+            ease: EASE.out,
             stagger: 0.07,
           },
           0.05,
@@ -70,10 +90,14 @@ export function Navbar() {
   );
 
   return (
-    <header ref={rootRef} className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5">
+    <header
+      ref={rootRef}
+      className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5"
+    >
+      {/* Theme-aware pill */}
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-[58px] w-full max-w-4xl items-center justify-between rounded-full border border-white/10 bg-[#0b0d12]/92 pl-6 pr-2 shadow-xl shadow-black/20 backdrop-blur-xl"
+        className="mx-auto flex h-[58px] w-full max-w-4xl items-center justify-between rounded-full border border-line bg-card/90 pl-6 pr-2 shadow-xl shadow-black/5 backdrop-blur-xl"
       >
         <a
           href="#"
@@ -81,7 +105,7 @@ export function Navbar() {
           onClick={() => setOpen(false)}
           className="shrink-0"
         >
-          <Logo className="h-[22px] w-auto sm:h-6" priority variant="white" />
+          <Logo className="h-[22px] w-auto sm:h-6" priority />
         </a>
 
         <ul className="hidden items-center gap-7 lg:flex">
@@ -89,12 +113,12 @@ export function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="group relative font-mono text-[11px] uppercase tracking-[0.16em] text-white/60 transition-colors duration-300 hover:text-white"
+                className="group relative text-sm font-normal tracking-body text-muted transition-colors duration-200 hover:text-ink"
               >
                 {link.label}
                 <span
                   aria-hidden
-                  className="absolute inset-x-0 -bottom-1.5 h-px origin-left scale-x-0 bg-[#00E5FF] transition-transform duration-300 group-hover:scale-x-100 group-focus-visible:scale-x-100"
+                  className="absolute inset-x-0 -bottom-1.5 h-px origin-left scale-x-0 bg-ink/50 transition-transform duration-200 group-hover:scale-x-100 group-focus-visible:scale-x-100"
                 />
               </a>
             </li>
@@ -102,14 +126,11 @@ export function Navbar() {
         </ul>
 
         <div className="flex items-center gap-1">
-          <a
-            href={SITE.calendly}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden items-center rounded-full bg-[#00E5FF] px-5 py-2.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-[#04121a] transition-colors duration-300 hover:bg-white lg:inline-flex"
-          >
-            Book a Call
-          </a>
+          <span className="hidden lg:block">
+            <Button href={SITE.calendly} external variant="primary">
+              Book a call
+            </Button>
+          </span>
 
           <button
             ref={toggleRef}
@@ -123,13 +144,13 @@ export function Navbar() {
           >
             <span
               aria-hidden
-              className={`h-[1.5px] w-6 rounded-full bg-white transition-transform duration-300 ${
+              className={`h-[1.5px] w-6 rounded-full bg-ink transition-transform duration-300 ${
                 open ? "translate-y-[3.75px] rotate-45" : ""
               }`}
             />
             <span
               aria-hidden
-              className={`h-[1.5px] w-6 rounded-full bg-white transition-transform duration-300 ${
+              className={`h-[1.5px] w-6 rounded-full bg-ink transition-transform duration-300 ${
                 open ? "-translate-y-[3.75px] -rotate-45" : ""
               }`}
             />
@@ -150,12 +171,9 @@ export function Navbar() {
                     data-menu-item
                     href={link.href}
                     onClick={closeMenu}
-                    className="flex items-baseline gap-4 py-2 text-4xl font-medium tracking-tight text-ink transition-colors duration-300 hover:text-accent"
+                    className={`${HEADLINE_SM} flex items-baseline gap-4 py-2 text-ink transition-colors duration-200 hover:text-accent`}
                   >
-                    <span
-                      aria-hidden
-                      className="font-mono text-[11px] tracking-[0.18em] text-muted"
-                    >
+                    <span aria-hidden className={`${META} tabular text-muted`}>
                       0{i + 1}
                     </span>
                     {link.label}
@@ -166,17 +184,16 @@ export function Navbar() {
           </nav>
 
           <div data-menu-extra className="flex flex-col gap-6">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
-              {SITE.legalName}
-            </p>
-            <a
+            <p className={`${META} text-muted`}>{SITE.legalName}</p>
+            <Button
               href={SITE.calendly}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex w-fit items-center rounded-full bg-[#00E5FF] px-7 py-3.5 font-mono text-[13px] font-bold uppercase tracking-[0.14em] text-[#04121a] transition-colors duration-300 hover:bg-ink hover:text-bg"
+              external
+              variant="primary"
+              arrow="nudge"
+              className="w-fit"
             >
-              Book Strategy Call
-            </a>
+              Book a strategy call
+            </Button>
           </div>
         </div>
       )}
