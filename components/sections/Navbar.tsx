@@ -78,14 +78,21 @@ export function Navbar() {
             yPercent: 110,
             duration: DUR.base,
             ease: EASE.out,
-            stagger: 0.07,
+            stagger: 0.05,
+            clearProps: "all",
           },
           0.05,
         )
         .from(
           "[data-menu-extra]",
-          { y: 20, autoAlpha: 0, duration: DUR.fast, ease: EASE.out },
-          "-=0.45",
+          {
+            y: 15,
+            autoAlpha: 0,
+            duration: DUR.fast,
+            ease: EASE.out,
+            clearProps: "all",
+          },
+          0.15,
         );
     },
     { scope: rootRef, dependencies: [open] },
@@ -164,7 +171,7 @@ export function Navbar() {
       {open && (
         <div
           id="mobile-menu"
-          className="fixed inset-0 -z-10 flex h-dvh min-h-screen w-full flex-col justify-between bg-bg px-5 pb-10 pt-[110px] sm:px-8 lg:hidden"
+          className="fixed inset-0 -z-10 flex flex-col justify-between overflow-y-auto bg-bg px-5 pb-6 pt-24 sm:px-8 sm:pb-8 sm:pt-28 lg:hidden"
         >
           <nav aria-label="Mobile">
             <ul className="flex flex-col">
@@ -186,7 +193,7 @@ export function Navbar() {
             </ul>
           </nav>
 
-          <div data-menu-extra className="flex flex-col gap-6">
+          <div data-menu-extra className="flex flex-col gap-4 pt-6 sm:gap-6">
             <p className={`${META} text-muted`}>{SITE.legalName}</p>
             <Button
               href={SITE.calendly}
