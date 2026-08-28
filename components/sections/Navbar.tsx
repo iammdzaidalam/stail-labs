@@ -18,6 +18,7 @@ import { HEADLINE_SM, META } from "@/components/ui/type";
  */
 export function Navbar() {
   const rootRef = useRef<HTMLElement>(null);
+  const navRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
 
@@ -53,12 +54,13 @@ export function Navbar() {
   /* Navbar load entrance */
   useGSAP(
     () => {
-      gsap.from(rootRef.current, {
+      gsap.from(navRef.current, {
         yPercent: -150,
         opacity: 0,
         duration: 1.2,
         ease: "power4.out",
-        delay: 1.2
+        delay: 1.2,
+        clearProps: "all",
       });
     },
     { scope: rootRef, dependencies: [] },
@@ -96,6 +98,7 @@ export function Navbar() {
     >
       {/* Theme-aware pill */}
       <nav
+        ref={navRef}
         aria-label="Primary"
         className="mx-auto flex h-[58px] w-full max-w-4xl items-center justify-between rounded-full border border-line bg-card/90 pl-6 pr-2 shadow-xl shadow-black/5 backdrop-blur-xl"
       >
@@ -161,7 +164,7 @@ export function Navbar() {
       {open && (
         <div
           id="mobile-menu"
-          className="fixed inset-0 -z-10 flex flex-col justify-between bg-bg px-5 pb-10 pt-[110px] sm:px-8 lg:hidden"
+          className="fixed inset-0 -z-10 flex h-dvh min-h-screen w-full flex-col justify-between bg-bg px-5 pb-10 pt-[110px] sm:px-8 lg:hidden"
         >
           <nav aria-label="Mobile">
             <ul className="flex flex-col">
